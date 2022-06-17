@@ -11,3 +11,4 @@ function getMaxStringLength(string, length) {
   return string.length <= length;
 }
 export { getRandomNumber,getRandomArrayElement,};
+

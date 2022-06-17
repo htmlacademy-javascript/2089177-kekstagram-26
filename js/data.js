@@ -44,7 +44,6 @@ const names = [
   'Лика'
 ];
 
-
 const addUserComments = () => {
   const comments = [];
   for (let i = 1; i <= getRandomNumber(QuantityComments.MIN, QuantityComments.MAX); i++) {
