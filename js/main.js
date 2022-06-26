@@ -1,3 +1,3 @@
-import {addUserPhotos} from './data.js';
 
+import {addUserPhotos} from './data.js';
 addUserPhotos();
