@@ -1,5 +1,6 @@
 import { getRandomNumber, getRandomArrayElement } from './util.js';
 
+const userPhotos = [];
 const PHOTO_GENERAL = 25;
 const QuantityLikes = {
   MIN: 15,
@@ -58,11 +59,10 @@ const addUserComments = () => {
 };
 
 const addUserPhotos = () => {
-  const userPhotos = [];
   for (let i = 1; i <= PHOTO_GENERAL; i++) {
     userPhotos.push({
       id: i,
-      url: `img/${i}.svg`,
+      url: `photos/${i}.jpg`,
       description: getRandomArrayElement(descriptions),
       likes: getRandomNumber(QuantityLikes.MIN, QuantityLikes.MAX),
       comments: addUserComments(),
@@ -70,5 +70,5 @@ const addUserPhotos = () => {
   }
   return userPhotos;
 };
-
-export { addUserPhotos };
+addUserPhotos();
+export { userPhotos };

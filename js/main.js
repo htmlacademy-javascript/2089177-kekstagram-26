@@ -1,3 +1,2 @@
-
-import {addUserPhotos} from './data.js';
-addUserPhotos();
+import { renderPhotos } from './preview.js';
+renderPhotos();
