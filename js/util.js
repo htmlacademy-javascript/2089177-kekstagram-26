@@ -10,5 +10,13 @@ const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements
 function getMaxStringLength(string, length) {
   return string.length <= length;
 }
-export { getRandomNumber,getRandomArrayElement,};
+// Закрываем попап на esc
+const bigPictureExit =() => {document.body.addEventListener('keydown',  (evt) => {
+  if(evt.keyCode === 27) {
+    document.body.classList.remove('modal-open');
+    document.querySelector('.big-picture').classList.add('hidden');
+  }
+});
+};
+export { getRandomNumber,getRandomArrayElement,bigPictureExit};
 

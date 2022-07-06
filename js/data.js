@@ -8,7 +8,7 @@ const QuantityLikes = {
 };
 const QuantityComments = {
   MIN: 1,
-  MAX: 3,
+  MAX: 5,
 };
 const QuantityPhotos = {
   MIN: 1,
@@ -70,5 +70,7 @@ const addUserPhotos = () => {
   }
   return userPhotos;
 };
+
 addUserPhotos();
-export { userPhotos };
+
+export default userPhotos;
