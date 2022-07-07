@@ -1,4 +1,5 @@
-import { bigPictureExit } from './util.js';
+
+
 
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
@@ -11,10 +12,20 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 commentsCount.classList.add('hidden');
 commentsLoader.classList.add('hidden');
 
-const bigPictureOff = () => {
+const onBigPictureOff = (evt) => {
+  evt.preventDefault();
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  bigPictureCancel.removeEventListener('click', bigPictureOff);
+  document.removeEventListener('click', onBigPictureOff);
+
+};
+const onBigPictureExit =(evt) => {
+  if(evt.key === 'Escape') {
+    evt.preventDefault();
+    bigPicture.classList.add('hidden');
+    body.classList.remove('modal-open');
+    document.removeEventListener('keydown', onBigPictureExit);
+  }
 };
 
 // функция вывода комментариев
@@ -49,8 +60,8 @@ const showPicture = (picture) => {
   bigPicture.querySelector('.likes-count').textContent = picture.likes;
   bigPicture.querySelector('.comments-count').textContent =picture.comments.length;
   bigPicture.querySelector('.social__caption').textContent =picture.description;
-  bigPictureCancel.addEventListener('click', bigPictureOff);
-  bigPictureExit('keydown');
+  bigPictureCancel.addEventListener('click', onBigPictureOff);
+  document.addEventListener('keydown',  onBigPictureExit);
   renderComments(picture.comments);
   bigPicture.classList.remove('hidden');
 

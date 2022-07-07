@@ -11,13 +11,6 @@ function getMaxStringLength(string, length) {
   return string.length <= length;
 }
 // Закрываем попап на esc
-const bigPictureExit =() => {document.addEventListener('keydown',  (evt) => {
-  if(evt.key === 'Escape') {
-    evt.preventDefault();
-    document.body.classList.remove('modal-open');
-    document.querySelector('.big-picture').classList.add('hidden');
-  }
-});
-};
-export { getRandomNumber,getRandomArrayElement,bigPictureExit};
+
+export { getRandomNumber,getRandomArrayElement};
 
