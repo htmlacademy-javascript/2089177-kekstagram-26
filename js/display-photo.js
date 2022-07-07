@@ -17,13 +17,6 @@ const bigPictureOff = () => {
   bigPictureCancel.removeEventListener('click', bigPictureOff);
 };
 
-const bigPictureOffEscape = () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-  bigPictureCancel.removeEventListener('keydown', bigPictureOffEscape);
-};
-
-
 // функция вывода комментариев
 const commentTemplate = document.querySelector('.social__comment');
 const commentList = document.querySelector('.social__comments');
