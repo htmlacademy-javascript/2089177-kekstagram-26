@@ -12,19 +12,19 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 commentsCount.classList.add('hidden');
 commentsLoader.classList.add('hidden');
 
-const onBigPictureOff = (evt) => {
+const onBigPictureCloseClick = (evt) => {
   evt.preventDefault();
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('click', onBigPictureOff);
+  document.removeEventListener('click', onBigPictureCloseClick);
 
 };
-const onBigPictureExit =(evt) => {
+const onBigPictureCloseKeydown =(evt) => {
   if(evt.key === 'Escape') {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onBigPictureExit);
+    document.removeEventListener('keydown', onBigPictureCloseKeydown);
   }
 };
 
@@ -60,8 +60,8 @@ const showPicture = (picture) => {
   bigPicture.querySelector('.likes-count').textContent = picture.likes;
   bigPicture.querySelector('.comments-count').textContent =picture.comments.length;
   bigPicture.querySelector('.social__caption').textContent =picture.description;
-  bigPictureCancel.addEventListener('click', onBigPictureOff);
-  document.addEventListener('keydown',  onBigPictureExit);
+  bigPictureCancel.addEventListener('click', onBigPictureCloseClick);
+  document.addEventListener('keydown',  onBigPictureCloseKeydown);
   renderComments(picture.comments);
   bigPicture.classList.remove('hidden');
 
