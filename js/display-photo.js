@@ -15,7 +15,7 @@ const onBigPictureCloseClick = (evt) => {
   evt.preventDefault();
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('click', onBigPictureCloseClick);
+  bigPictureCancel.removeEventListener('click', onBigPictureCloseClick);
   document.removeEventListener('keydown', onBigPictureCloseKeydown);
 
 };
@@ -24,8 +24,8 @@ const onBigPictureCloseKeydown =(evt) => {
   if(evt.key === 'Escape') {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
+    bigPictureCancel.removeEventListener('click', onBigPictureCloseClick);
     document.removeEventListener('keydown', onBigPictureCloseKeydown);
-    document.removeEventListener('click', onBigPictureCloseClick);
   }
 };
 
