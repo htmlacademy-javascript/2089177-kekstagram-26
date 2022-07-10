@@ -10,7 +10,7 @@ const renderPhoto = (picture) => {
   photoPreview.querySelector('.picture__img').src = picture.url;
   photoPreview.querySelector('.picture__likes').textContent = picture.likes;
   photoPreview.querySelector('.picture__comments').textContent =picture.comments.length;
-// добавляем функцию отображения большой картинки
+  // добавляем функцию отображения большой картинки
   photoPreview.addEventListener('click', (evt) => {
     evt.preventDefault();
     showPicture(picture);
