@@ -1,8 +1,9 @@
-import { bigPictureExit } from './util.js';
+
+import { isEscapeKey } from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
-const bigPictureCancel = document.querySelector('.big-picture__cancel');
+const bigPictureClose = document.querySelector('.big-picture__cancel');
 
 
 // скрываем лишнее
@@ -11,18 +12,25 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 commentsCount.classList.add('hidden');
 commentsLoader.classList.add('hidden');
 
-const bigPictureOff = () => {
+
+const closeModalDisplayPhoto = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  bigPictureCancel.removeEventListener('click', bigPictureOff);
+  bigPictureClose.removeEventListener('click', onBigPictureCloseClick);
+  document.removeEventListener('keydown', onBigPictureCloseKeydown);
 };
 
-const bigPictureOffEscape = () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-  bigPictureCancel.removeEventListener('keydown', bigPictureOffEscape);
+const onBigPictureCloseClick = (evt) => {
+  evt.preventDefault();
+  closeModalDisplayPhoto();
 };
 
+const onBigPictureCloseKeydown =(evt) => {
+  if(isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModalDisplayPhoto();
+  }
+};
 
 // функция вывода комментариев
 const commentTemplate = document.querySelector('.social__comment');
@@ -56,8 +64,8 @@ const showPicture = (picture) => {
   bigPicture.querySelector('.likes-count').textContent = picture.likes;
   bigPicture.querySelector('.comments-count').textContent =picture.comments.length;
   bigPicture.querySelector('.social__caption').textContent =picture.description;
-  bigPictureCancel.addEventListener('click', bigPictureOff);
-  bigPictureExit('keydown');
+  bigPictureClose.addEventListener('click', onBigPictureCloseClick);
+  document.addEventListener('keydown',  onBigPictureCloseKeydown);
   renderComments(picture.comments);
   bigPicture.classList.remove('hidden');
 
