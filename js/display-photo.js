@@ -20,8 +20,8 @@ const onBigPictureCloseClick = (evt) => {
 
 };
 const onBigPictureCloseKeydown =(evt) => {
-  evt.preventDefault();
   if(evt.key === 'Escape') {
+    evt.preventDefault();
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
     bigPictureCancel.removeEventListener('click', onBigPictureCloseClick);

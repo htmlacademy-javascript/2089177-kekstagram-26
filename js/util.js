@@ -12,5 +12,5 @@ function getMaxStringLength(string, length) {
 }
 // Закрываем попап на esc
 
-export { getRandomNumber,getRandomArrayElement};
+export { getRandomNumber,getRandomArrayElement,};
 
