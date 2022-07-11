@@ -7,8 +7,8 @@ const QuantityLikes = {
   MAX: 200,
 };
 const QuantityComments = {
-  MIN: 1,
-  MAX: 5,
+  MIN: 5,
+  MAX: 10,
 };
 const QuantityPhotos = {
   MIN: 1,

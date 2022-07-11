@@ -9,6 +9,11 @@ const imagePreview = uploadModal.querySelector('.img-upload__preview > img');
 const uploadPhoto = document.querySelector('#upload-file');
 const uploadModalClose = document.querySelector('#upload-cancel');
 
+// Сброс настроек редактирования фото
+const resetSettings = () => {
+  imagePreview.style = 'transform: scale(1.00)';
+  scaleValue.value = '100%';
+};
 // Открытие окна редактирования загруженного фото
 uploadPhoto.addEventListener('change',  () => {
   uploadModal.classList.remove('hidden');
@@ -33,11 +38,7 @@ document.addEventListener('keydown', (evt) => {
     closePhotoEditor();
   }
 });
-// Сброс настроек редактирования фото
-const resetSettings = () => {
-  imagePreview.style = 'transform: scale(1.00)';
-  scaleValue.value = '100%';
-};
+
 // Изменение размера фото
 const ScalePhoto = {
   MAX: 100,
