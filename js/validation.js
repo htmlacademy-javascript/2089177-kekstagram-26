@@ -26,7 +26,7 @@ const errorMessage = {
   REPEAT_HASHTAGS:'Хэш-теги не должны повторяться.',
   COMMENT_LENGTH:`Длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`,
   SEPARATION_HASHTAGS: 'Хэш-теги необходимо разделять только пробелом',
-  SEPARATION_HASHTAG:'Поставьте пробел между хеш-тегами'
+  SEPARATION_HASHTAG:'Не хватает пробела между хеш-тегами'
 };
 
 
@@ -56,7 +56,10 @@ pristine.addValidator(textDescription, isValidateComment,errorMessage.COMMENT_LE
 
 uploadForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
+    textHashtags.style.border = '2px solid red';
     evt.preventDefault();
+  }else{
+    textHashtags.style.border = 'none';
   }
 });
 
