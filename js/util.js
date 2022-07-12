@@ -14,4 +14,16 @@ function getMaxStringLength(string, length) {
 // определениее клавиши ESC
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomNumber,getRandomArrayElement,isEscapeKey};
+
+const isArrayUnique = (elements) => {
+  const result = [];
+  elements.forEach((element) => {
+    if (!result.includes(element)) {
+      result.push(element);
+    }
+  });
+  return result.length === elements.length;
+};
+
+
+export { getRandomNumber,getRandomArrayElement,isEscapeKey,getMaxStringLength,isArrayUnique};
