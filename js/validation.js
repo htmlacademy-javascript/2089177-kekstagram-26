@@ -1,4 +1,10 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey,getMaxStringLength,isArrayUnique } from './util.js';
+
+const RE = /^#[a-zA-Zа-яА-ЯёЁ0-9]{0,}$/;
+const RE_SYMBOL = /[^-_=+;:,.]$/m;
+const HASHTAGS_LENGTH =19;
+const MAX_COMMENT_LENGTH = 140;
+const MAX_HASHTAGS = 5;
 
 const uploadForm = document.querySelector('.img-upload__form');
 const textDescription = document.querySelector('.text__description');
@@ -13,49 +19,37 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'form__error'
 }, false);
 
-const Hashtagslength = {
-  MIN: 2,
-  MAX: 20,
+const errorMessage = {
+  VALIDATE_TYPE:'Хэш-тег начинается с # (решетки) и состоит только из букв и цифр.',
+  FIRST_SIGN_TYPE:'Хэш-тег начинается с # (решетки) и состоит только из букв и цифр.',
+  HASHTAG_LENGTH: `Максимальная длина одного хэш-тега ${HASHTAGS_LENGTH} символов после # (решетки)`,
+  MAX_HASHTAGS_LENGTH:`Укажите не больше ${MAX_HASHTAGS} хэш-тегов.`,
+  REPEAT_HASHTAGS:'Хэш-теги не должны повторяться.',
+  COMMENT_LENGTH:`Длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`,
+  SEPARATION_HASHTAGS: 'Хэш-теги необходимо разделить пробелом',
 };
-const maxCommentlength = 140;
-const maxHashtags = 5;
-const validateComment = (value) => value.length <= maxCommentlength;
+
+
 const preparedHashtags = (value) => value.trim().toLowerCase().split(' ');
 
-const isArrayInique = (arrayToCheck) => {
-  const length = arrayToCheck.length;
 
-  for (let i = 0; i < length; i++) {
-    const comparedElement = arrayToCheck[i];
+const getMaxHashtagsLength = (hashtags) => preparedHashtags(hashtags).length <= MAX_HASHTAGS;
+pristine.addValidator(textHashtags,getMaxHashtagsLength,errorMessage.MAX_HASHTAGS_LENGTH);
 
-    for (let j = i + 1; j < length; j++) {
-      const elementToCompare = arrayToCheck[j];
+const getSeparationHashtags = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => RE_SYMBOL.test(value));
+pristine.addValidator(textHashtags,getSeparationHashtags,errorMessage.SEPARATION_HASHTAGS);
 
-      if (comparedElement === elementToCompare && comparedElement !== '#') {
-        return false;
-      }
-    }
-  }
-  return true;
-};
+const getRepeatHashtags = (hashtags) => isArrayUnique(preparedHashtags(hashtags));
+pristine.addValidator(textHashtags,getRepeatHashtags,errorMessage.REPEAT_HASHTAGS);
 
-pristine.addValidator(textHashtags, (hashtags) => preparedHashtags(hashtags).length <= maxHashtags,
-  'Укажите не больше 5 хэштегов');
+const getFirstSignTypeHashtag = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => RE.test(value));
+pristine.addValidator(textHashtags, getFirstSignTypeHashtag,errorMessage.FIRST_SIGN_TYPE);
 
-pristine.addValidator(textHashtags, (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => /[^-_=+;:,.]$/m.test(value)),
-  'Хэштеги необходимо разделить пробелом');
+const getHashtagLength = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => getMaxStringLength(value,HASHTAGS_LENGTH));
+pristine.addValidator(textHashtags, getHashtagLength,errorMessage.HASHTAG_LENGTH);
 
-pristine.addValidator(textHashtags, (hashtags) => isArrayInique(preparedHashtags(hashtags)),
-  'Хэштеги не должны повторяться');
-
-pristine.addValidator(textHashtags, (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => /^#[a-zA-Zа-яА-ЯёЁ0-9]{0,}$/.test(value)),
-  'Хэштег начинается с # (решетки) и состоит только из букв и цифр');
-
-pristine.addValidator(textHashtags, (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => value.length >= Hashtagslength.MIN && value.length <= Hashtagslength.MAX),
-  'Длина хэштега — от 1 до 19 символов после # (решетки)');
-
-pristine.addValidator(textDescription, validateComment,
-  'Комментарий не должен быть длиннее 140 символов');
+const getValidateComment = (value) => getMaxStringLength(value, MAX_COMMENT_LENGTH);
+pristine.addValidator(textDescription, getValidateComment,errorMessage.COMMENT_LENGTH);
 
 
 uploadForm.addEventListener('submit', (evt) => {

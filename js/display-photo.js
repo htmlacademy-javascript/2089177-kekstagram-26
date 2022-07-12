@@ -8,10 +8,13 @@ const body = document.querySelector('body');
 const bigPictureClose = document.querySelector('.big-picture__cancel');
 const commentList = document.querySelector('.social__comments');
 const commentTemplate = commentList.querySelector('.social__comment');
+
+
+let commentsLoaded = [];
+
 const commentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 
-let commentsLoaded = [];
 let commentsCount = COMMENTS_LOAD_STEP;
 
 const closeModalDisplayPhoto = () => {
@@ -46,11 +49,12 @@ const renderComments = (comments) => {
   commentsLoaded = comments.slice(0, commentsCount);
 
   commentList.innerHTML = '';
+
   commentCount.textContent = `${commentsLoaded.length} из ${comments.length} комментариев`;
 
   const commentsListFragment = document.createDocumentFragment();
 
-  comments.forEach((comment) => {
+  commentsLoaded.forEach((comment) => {
     commentsListFragment.appendChild(renderComment(comment));
   });
 
