@@ -20,41 +20,46 @@ const pristine = new Pristine(uploadForm, {
 }, false);
 
 const errorMessage = {
-  VALIDATE_TYPE:'Хэш-тег начинается с # (решетки) и состоит только из букв и цифр.',
   FIRST_SIGN_TYPE:'Хэш-тег начинается с # (решетки) и состоит только из букв и цифр.',
   HASHTAG_LENGTH: `Максимальная длина одного хэш-тега ${HASHTAGS_LENGTH} символов после # (решетки)`,
   MAX_HASHTAGS_LENGTH:`Укажите не больше ${MAX_HASHTAGS} хэш-тегов.`,
   REPEAT_HASHTAGS:'Хэш-теги не должны повторяться.',
   COMMENT_LENGTH:`Длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`,
-  SEPARATION_HASHTAGS: 'Хэш-теги необходимо разделить пробелом',
+  SEPARATION_HASHTAGS: 'Хэш-теги необходимо разделять только пробелом',
+  SEPARATION_HASHTAG:'Не хватает пробела между хеш-тегами'
 };
 
 
 const preparedHashtags = (value) => value.trim().toLowerCase().split(' ');
 
+const isSplitSpaceHashtag = (hashtags) => preparedHashtags(hashtags).some((value) => value.indexOf('#', 1) <= 1);
+pristine.addValidator(textHashtags,isSplitSpaceHashtag,errorMessage.SEPARATION_HASHTAG);
 
-const getMaxHashtagsLength = (hashtags) => preparedHashtags(hashtags).length <= MAX_HASHTAGS;
-pristine.addValidator(textHashtags,getMaxHashtagsLength,errorMessage.MAX_HASHTAGS_LENGTH);
+const isMaxHashtagsLength = (hashtags) => preparedHashtags(hashtags).length <= MAX_HASHTAGS;
+pristine.addValidator(textHashtags,isMaxHashtagsLength,errorMessage.MAX_HASHTAGS_LENGTH);
 
-const getSeparationHashtags = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => RE_SYMBOL.test(value));
-pristine.addValidator(textHashtags,getSeparationHashtags,errorMessage.SEPARATION_HASHTAGS);
+const isSeparationHashtags = (hashtags) => hashtags === '' || preparedHashtags(hashtags).some((value) => value.indexOf('#', 1) <= 1) ||  preparedHashtags(hashtags).every((value) => RE_SYMBOL.test(value));
+pristine.addValidator(textHashtags,isSeparationHashtags,errorMessage.SEPARATION_HASHTAGS);
 
-const getRepeatHashtags = (hashtags) => isArrayUnique(preparedHashtags(hashtags));
-pristine.addValidator(textHashtags,getRepeatHashtags,errorMessage.REPEAT_HASHTAGS);
+const isRepeatHashtags = (hashtags) => isArrayUnique(preparedHashtags(hashtags));
+pristine.addValidator(textHashtags,isRepeatHashtags,errorMessage.REPEAT_HASHTAGS);
 
-const getFirstSignTypeHashtag = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => RE.test(value));
-pristine.addValidator(textHashtags, getFirstSignTypeHashtag,errorMessage.FIRST_SIGN_TYPE);
+const isFirstSignTypeHashtag = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => RE.test(value));
+pristine.addValidator(textHashtags, isFirstSignTypeHashtag,errorMessage.FIRST_SIGN_TYPE);
 
-const getHashtagLength = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => getMaxStringLength(value,HASHTAGS_LENGTH));
-pristine.addValidator(textHashtags, getHashtagLength,errorMessage.HASHTAG_LENGTH);
+const isHashtagLength = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => getMaxStringLength(value,HASHTAGS_LENGTH));
+pristine.addValidator(textHashtags, isHashtagLength,errorMessage.HASHTAG_LENGTH);
 
-const getValidateComment = (value) => getMaxStringLength(value, MAX_COMMENT_LENGTH);
-pristine.addValidator(textDescription, getValidateComment,errorMessage.COMMENT_LENGTH);
+const isValidateComment = (value) => getMaxStringLength(value, MAX_COMMENT_LENGTH);
+pristine.addValidator(textDescription, isValidateComment,errorMessage.COMMENT_LENGTH);
 
 
 uploadForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
+    textHashtags.style.border = '2px solid red';
     evt.preventDefault();
+  }else{
+    textHashtags.style.border = 'none';
   }
 });
 

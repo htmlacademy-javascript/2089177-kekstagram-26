@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { setDefaultLevel } from './effects.js';
 
 const body = document.querySelector('body');
 const uploadModal = document.querySelector('.img-upload__overlay');
@@ -26,6 +27,7 @@ const closePhotoEditor  = () => {
   uploadPhoto.value = '';
   uploadModal.classList.add('hidden');
   body.classList.remove('modal-open');
+  setDefaultLevel();
 };
 
 uploadModalClose.addEventListener('click',  () => {
