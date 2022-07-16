@@ -1,4 +1,4 @@
-import userPhotos from './data.js';
+
 import { showPicture } from './display-photo.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -19,9 +19,9 @@ const renderPhoto = (picture) => {
   return photoPreview;
 };
 
-const renderPhotos = () => {
+const renderPhotos = (photos) => {
   const picturesListFragment = document.createDocumentFragment();
-  userPhotos.forEach((photo) => {
+  photos.forEach((photo) => {
     picturesListFragment.appendChild(renderPhoto(photo));
   });
   picturesList.appendChild(picturesListFragment);

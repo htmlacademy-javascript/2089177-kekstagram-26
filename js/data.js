@@ -24,7 +24,7 @@ const userComments = [
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 const descriptions = [
   'Зацените посаны',
@@ -32,7 +32,7 @@ const descriptions = [
   'Ля какой',
   'На чилле на расслабоне',
   'У меня нет фантазии подписывапть фото,сорьки',
-  'Вот так вот...'
+  'Вот так вот...',
 ];
 const names = [
   'Валера',
@@ -42,15 +42,22 @@ const names = [
   'Илья',
   'Олег',
   'Леграша',
-  'Лика'
+  'Лика',
 ];
 
 const addUserComments = () => {
   const comments = [];
-  for (let i = 1; i <= getRandomNumber(QuantityComments.MIN, QuantityComments.MAX); i++) {
+  for (
+    let i = 1;
+    i <= getRandomNumber(QuantityComments.MIN, QuantityComments.MAX);
+    i++
+  ) {
     comments.push({
       id: getRandomNumber(QuantityRandomId.MAX, QuantityRandomId.MIN),
-      avatar: `img/avatar-${getRandomNumber(QuantityPhotos.MIN, QuantityPhotos.MAX)}.svg`,
+      avatar: `img/avatar-${getRandomNumber(
+        QuantityPhotos.MIN,
+        QuantityPhotos.MAX
+      )}.svg`,
       message: getRandomArrayElement(userComments),
       name: getRandomArrayElement(names),
     });
@@ -72,5 +79,3 @@ const addUserPhotos = () => {
 };
 
 addUserPhotos();
-
-export default userPhotos;

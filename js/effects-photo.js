@@ -66,9 +66,10 @@ noUiSlider.create(effectLevelSlider, {
   },
   start: Slider.MAX,
   connect: 'lower',
+  step:Slider.STEP,
 });
 
-effectLevelSlider.noUiSlider.on('change', () => {
+effectLevelSlider.noUiSlider.on('slide', () => {
   effectLevelValue.value = Math.round(effectLevelSlider.noUiSlider.get());
 
   uploadPreviewImg.style.filter = effects[lastClass.replace('effects__preview--', '')]();
