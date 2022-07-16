@@ -1,6 +1,4 @@
 
-import { isEscapeKey } from './util.js';
-
 const COMMENTS_LOAD_STEP =5;
 
 const bigPicture = document.querySelector('.big-picture');
@@ -22,7 +20,6 @@ const closeModalDisplayPhoto = () => {
   body.classList.remove('modal-open');
   bigPictureClose.removeEventListener('click', closeModalDisplayPhoto);
   commentList.innerHTML = '';
-  document.removeEventListener('keydown', onBigPictureCloseKeydown);
   commentsCount = COMMENTS_LOAD_STEP;
   commentsLoaded = [];
 };
@@ -70,13 +67,6 @@ const renderComments = (comments) => {
   commentsCount += COMMENTS_LOAD_STEP;
 };
 
-const onBigPictureCloseKeydown =(evt) => {
-  if(isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeModalDisplayPhoto();
-  }
-};
-
 // Отображение Попапа большой картинки
 const showPicture = (picture) => {
   commentsCount = COMMENTS_LOAD_STEP;
@@ -87,8 +77,6 @@ const showPicture = (picture) => {
   bigPicture.querySelector('.social__caption').textContent =picture.description;
   bigPictureClose.addEventListener('click', closeModalDisplayPhoto);
   bigPicture.classList.remove('hidden');
-
-  document.addEventListener('keydown',  onBigPictureCloseKeydown);
 
   renderComments(picture.comments.slice());
 };

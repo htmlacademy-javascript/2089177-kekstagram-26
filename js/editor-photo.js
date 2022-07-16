@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { setDefaultLevel } from './effects.js';
+import { setDefaultLevel } from './effects-photo.js';
 
 const body = document.querySelector('body');
 const uploadModal = document.querySelector('.img-upload__overlay');
@@ -14,31 +14,35 @@ const uploadModalClose = document.querySelector('#upload-cancel');
 const resetSettings = () => {
   imagePreview.style = 'transform: scale(1.00)';
   scaleValue.value = '100%';
+  setDefaultLevel();
 };
-// Открытие окна редактирования загруженного фото
-uploadPhoto.addEventListener('change',  () => {
-  uploadModal.classList.remove('hidden');
-  body.classList.add('modal-open');
-  resetSettings();
-});
-
 // Закрытие окна
-const closePhotoEditor  = () => {
+const closePhotoEditor = () => {
   uploadPhoto.value = '';
   uploadModal.classList.add('hidden');
   body.classList.remove('modal-open');
   setDefaultLevel();
 };
+// Открытие окна редактирования загруженного фото
+uploadPhoto.addEventListener('change', () => {
+  uploadModal.classList.remove('hidden');
+  body.classList.add('modal-open');
 
-uploadModalClose.addEventListener('click',  () => {
-  closePhotoEditor();
-});
+  document.addEventListener(
+    'keydown',
+    (evt) => {
+      if (isEscapeKey(evt)) {
+        evt.preventDefault();
+        closePhotoEditor();
+      }
+    },
+    { once: true }
+  );
 
-document.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
+  uploadModalClose.addEventListener('click', () => {
     closePhotoEditor();
-  }
+  });
+  resetSettings();
 });
 
 // Изменение размера фото
@@ -54,9 +58,9 @@ buttonPlus.addEventListener('click', () => {
     scale = ScalePhoto.MAX;
   }
 
-  scaleValue.value = `${scale  }%`;
+  scaleValue.value = `${scale}%`;
   scale = scale / 100;
-  imagePreview.style.transform = `scale(${  scale  })`;
+  imagePreview.style.transform = `scale(${scale})`;
 });
 
 buttonMinus.addEventListener('click', () => {
@@ -66,8 +70,9 @@ buttonMinus.addEventListener('click', () => {
     scale = ScalePhoto.MIN;
   }
 
-  scaleValue.value = `${scale  }%`;
+  scaleValue.value = `${scale}%`;
   scale = scale / 100;
-  imagePreview.style.transform = `scale(${  scale  })`;
+  imagePreview.style.transform = `scale(${scale})`;
 });
 
+export { closePhotoEditor };
