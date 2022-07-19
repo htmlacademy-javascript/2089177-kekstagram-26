@@ -1,7 +1,7 @@
 import { isEscapeKey,getMaxStringLength,isArrayUnique } from './util.js';
 import { showError, showSuccess } from './alerts.js';
 import { request } from './fetch.js';
-import { closePhotoEditor } from './editor-photo.js';
+import { onPhotoEditorClose } from './editor-photo.js';
 
 
 const RE = /^#[a-zA-Zа-яА-ЯёЁ0-9]{0,}$/;
@@ -58,7 +58,7 @@ pristine.addValidator(textDescription, isValidateComment,errorMessage.COMMENT_LE
 
 const onSuccess = () => {
   showSuccess('Изображение успешно загружено');
-  closePhotoEditor();
+  onPhotoEditorClose();
   uploadForm.reset();
 };
 

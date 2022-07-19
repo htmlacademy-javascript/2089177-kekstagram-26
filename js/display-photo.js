@@ -60,23 +60,28 @@ const showPicture = (picture) => {
 
   bigPicture.classList.remove('hidden');
 
-  const closeModalDisplayPhoto = (evt) => {
+  const closeModalDisplayPhotoEsc =(evt)=>{
+    if (isEscapeKey(evt)){
+      evt.preventDefault();
+      // eslint-disable-next-line no-use-before-define
+      onModalCloseDisplayPhoto();
+    }
+  };
+  const onModalCloseDisplayPhoto = () => {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
-    bigPictureClose.removeEventListener('click', closeModalDisplayPhoto);
+    bigPictureClose.removeEventListener('click', onModalCloseDisplayPhoto);
     commentList.innerHTML = '';
     commentsCount = COMMENTS_LOAD_STEP;
     commentsLoaded = [];
     commentsLoader.removeEventListener('click', onCommentsLoaderClick);
-    body.removeEventListener('keydown', closeModalDisplayPhoto);
-    if (isEscapeKey(evt)){
-      closeModalDisplayPhoto();
-    }
+    body.removeEventListener('keydown', closeModalDisplayPhotoEsc);
+
   };
 
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
-  bigPictureClose.addEventListener('click', closeModalDisplayPhoto);
-  body.addEventListener('keydown', closeModalDisplayPhoto);
+  bigPictureClose.addEventListener('click', onModalCloseDisplayPhoto);
+  body.addEventListener('keydown', closeModalDisplayPhotoEsc);
 
 };
 
