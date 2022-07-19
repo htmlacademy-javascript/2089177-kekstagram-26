@@ -5,6 +5,7 @@ import { showError } from './alerts.js';
 import { debounce,sortArray } from './util.js';
 import './editor-photo.js';
 import './validation.js';
+import './load-photo.js';
 
 const DEFAULT_PREVIEW_LOAD = 25;
 const RANDOM_PREVIEW_LOAD = 10;
