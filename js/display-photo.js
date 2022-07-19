@@ -48,6 +48,7 @@ const renderComments = (comments) => {
 
 // Отображение Попапа большой картинки
 const showPicture = (picture) => {
+  renderComments(picture.comments.slice());
 
   const onCommentsLoaderClick = () => {
     renderComments(picture.comments.slice());
@@ -58,8 +59,6 @@ const showPicture = (picture) => {
   bigPicture.querySelector('.social__caption').textContent =picture.description;
 
   bigPicture.classList.remove('hidden');
-
-  renderComments(picture.comments.slice());
 
   const closeModalDisplayPhoto = (evt) => {
     bigPicture.classList.add('hidden');
