@@ -7,9 +7,8 @@ function getRandomNumber(first, last) {
 // Функция по возврату случайного элемента в массиве
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 // Проверка максимальной длинны строки
-function getMaxStringLength(string, length) {
-  return string.length <= length;
-}
+
+const getMaxStringLength = (string, length)=> string.length <= length;
 
 // определениее клавиши ESC
 const isEscapeKey = (evt) => evt.key === 'Escape';
@@ -25,5 +24,23 @@ const isArrayUnique = (elements) => {
   return result.length === elements.length;
 };
 
+const debounce = (callback, timeoutDelay) =>{
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
-export { getRandomNumber,getRandomArrayElement,isEscapeKey,getMaxStringLength,isArrayUnique};
+const sortArray = (arr) => {
+  let j, temp;
+  for (let i = arr.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    temp = arr[j];
+    arr[j] = arr[i];
+    arr[i] = temp;
+  }
+  return arr;
+};
+
+export { getRandomNumber,getRandomArrayElement,isEscapeKey,getMaxStringLength,isArrayUnique,debounce,sortArray};

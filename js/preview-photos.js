@@ -14,6 +14,7 @@ const renderPhoto = (picture) => {
   photoPreview.addEventListener('click', (evt) => {
     evt.preventDefault();
     showPicture(picture);
+
   });
 
   return photoPreview;

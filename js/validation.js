@@ -16,11 +16,8 @@ const textHashtags = document.querySelector('.text__hashtags');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
-  errorClass: 'form-item__invalid',
-  successClass: 'form-item__valid',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
-  errorTextClass: 'form__error'
 },false);
 
 const errorMessage = {
