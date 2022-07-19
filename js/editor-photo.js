@@ -17,27 +17,32 @@ const resetSettings = () => {
   setDefaultLevel();
 };
 // Закрытие окна
-const closePhotoEditor = (evt) => {
+const closePhotoEditorEsc =(evt)=>{
+  if (isEscapeKey(evt)){
+    evt.preventDefault();
+    // eslint-disable-next-line no-use-before-define
+    onPhotoEditorClose();
+  }
+};
+const onPhotoEditorClose = () => {
   uploadPhoto.value = '';
   uploadModal.classList.add('hidden');
   body.classList.remove('modal-open');
   setDefaultLevel();
   resetSettings();
-  document.removeEventListener('keydown',closePhotoEditor);
-  uploadModalClose.removeEventListener('click', closePhotoEditor);
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closePhotoEditor();
-  }
+  document.removeEventListener('keydown',closePhotoEditorEsc);
+  uploadModalClose.removeEventListener('click', onPhotoEditorClose);
+
 };
 // Открытие окна редактирования загруженного фото
 uploadPhoto.addEventListener('change', () => {
+  resetSettings();
   uploadModal.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  document.addEventListener('keydown',closePhotoEditor);
+  document.addEventListener('keydown',closePhotoEditorEsc);
 
-  uploadModalClose.addEventListener('click', closePhotoEditor);
+  uploadModalClose.addEventListener('click', onPhotoEditorClose);
 });
 
 // Изменение размера фото
@@ -70,4 +75,4 @@ buttonMinus.addEventListener('click', () => {
   imagePreview.style.transform = `scale(${scale})`;
 });
 
-export { closePhotoEditor };
+export { onPhotoEditorClose };
