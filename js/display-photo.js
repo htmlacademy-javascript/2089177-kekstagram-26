@@ -78,11 +78,9 @@ const showPicture = (picture) => {
     body.removeEventListener('keydown', closeModalDisplayPhotoEsc);
 
   };
-
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
   bigPictureClose.addEventListener('click', onModalCloseDisplayPhoto);
   body.addEventListener('keydown', closeModalDisplayPhotoEsc);
-
 };
 
 export { showPicture };
