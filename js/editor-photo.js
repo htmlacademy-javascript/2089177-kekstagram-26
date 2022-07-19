@@ -17,32 +17,29 @@ const resetSettings = () => {
   setDefaultLevel();
 };
 // Закрытие окна
-const closePhotoEditor = () => {
+const closePhotoEditor = (evt) => {
   uploadPhoto.value = '';
   uploadModal.classList.add('hidden');
   body.classList.remove('modal-open');
   setDefaultLevel();
+  resetSettings();
+  document.removeEventListener('keydown',closePhotoEditor);
+  uploadModalClose.removeEventListener('click', closePhotoEditor);
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closePhotoEditor();
+  }
+
 };
 // Открытие окна редактирования загруженного фото
 uploadPhoto.addEventListener('change', () => {
   uploadModal.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  document.addEventListener(
-    'keydown',
-    (evt) => {
-      if (isEscapeKey(evt)) {
-        evt.preventDefault();
-        closePhotoEditor();
-      }
-    },
-    { once: true }
-  );
+  document.addEventListener('keydown',closePhotoEditor);
 
-  uploadModalClose.addEventListener('click', () => {
-    closePhotoEditor();
-  });
-  resetSettings();
+  uploadModalClose.addEventListener('click', closePhotoEditor);
+
 });
 
 // Изменение размера фото
