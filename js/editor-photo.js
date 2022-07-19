@@ -32,6 +32,7 @@ const closePhotoEditor = (evt) => {
 };
 // Открытие окна редактирования загруженного фото
 uploadPhoto.addEventListener('change', () => {
+  resetSettings();
   uploadModal.classList.remove('hidden');
   body.classList.add('modal-open');
 
