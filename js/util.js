@@ -32,7 +32,7 @@ const debounce = (callback, timeoutDelay) =>{
   };
 };
 
-const sortArray = (arr) => {
+const shuffleArray = (arr) => {
   let j, temp;
   for (let i = arr.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
@@ -43,4 +43,4 @@ const sortArray = (arr) => {
   return arr;
 };
 
-export { getRandomNumber,getRandomArrayElement,isEscapeKey,getMaxStringLength,isArrayUnique,debounce,sortArray};
+export { getRandomNumber,getRandomArrayElement,isEscapeKey,getMaxStringLength,isArrayUnique,debounce,shuffleArray};

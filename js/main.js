@@ -2,7 +2,7 @@
 import { renderPhotos } from './preview-photos.js';
 import { request } from './fetch.js';
 import { showError } from './alerts.js';
-import { debounce,sortArray } from './util.js';
+import { debounce,shuffleArray } from './util.js';
 import './editor-photo.js';
 import './validation.js';
 import './load-photo.js';
@@ -34,7 +34,7 @@ const filters = {
     renderPhotos(photos.slice(0, DEFAULT_PREVIEW_LOAD));
   },
   'filter-random': () => {
-    renderPhotos(sortArray(photos.slice()).slice(0, RANDOM_PREVIEW_LOAD));
+    renderPhotos(shuffleArray(photos.slice()).slice(0, RANDOM_PREVIEW_LOAD));
 
   },
   'filter-discussed': () => {
