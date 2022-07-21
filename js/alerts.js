@@ -1,26 +1,32 @@
 import { isEscapeKey } from './util.js';
 
-const main = document.querySelector('main');
-const errorTemplate = document.querySelector('#error').content;
-const errorFragment = document.createDocumentFragment();
+const mainElement = document.querySelector('main');
+const errorTemplateElement = document.querySelector('#error').content;
+const errorFragmentElement = document.createDocumentFragment();
 
 const removeAllert = (type) => {
   document.querySelector(type).remove();
-  document.removeEventListener('keydown', removeAllert);
+  // eslint-disable-next-line no-use-before-define
+  document.removeEventListener('keydown', onSuccessEscKeydown);
+  // eslint-disable-next-line no-use-before-define
+  document.removeEventListener('keydown', onAlertEscKeydown);
 };
 const onAlertEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    removeAllert();
+    removeAllert('.error');
+  }
+};
+const onSuccessEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    removeAllert('.success');
   }
 };
 
 const showError = (text, button) => {
-  const errorElement = errorTemplate.cloneNode(true);
-
+  const errorElement = errorTemplateElement.cloneNode(true);
+  const errorButtonElement = errorElement.querySelector('.error__button');
   errorElement.querySelector('.error__title').textContent = text;
-  errorElement.querySelector('.error__button').textContent = button;
-
-  const errorButton = errorElement.querySelector('.error__button');
+  errorButtonElement.textContent = button;
 
   document.addEventListener('click', (evt) => {
     const element = document.querySelector('.error__inner');
@@ -29,26 +35,26 @@ const showError = (text, button) => {
     }
   });
 
-  errorButton.addEventListener('click', () => {
+  errorButtonElement.addEventListener('click', () => {
     removeAllert('.error');
   });
 
-  document.addEventListener('keydown', onAlertEscKeydown);
 
-  errorFragment.appendChild(errorElement);
-  main.appendChild(errorFragment);
+  document.addEventListener('keydown', onAlertEscKeydown);
+  errorFragmentElement.appendChild(errorElement);
+  mainElement.appendChild(errorFragmentElement);
 };
 
-const successTemplate = document.querySelector('#success').content;
+const successTemplateElement = document.querySelector('#success').content;
 const successFragment = document.createDocumentFragment();
 
 const showSuccess = (text) => {
-  const successElement = successTemplate.cloneNode(true);
+  const successElement = successTemplateElement.cloneNode(true);
 
   successElement.querySelector('.success__title').textContent = text;
 
-  const successButton = successElement.querySelector('.success__button');
-
+  const successButtonElement = successElement.querySelector('.success__button');
+  document.addEventListener('keydown', onSuccessEscKeydown);
   document.addEventListener('click', (evt) => {
     const element = document.querySelector('.success__inner');
     if (!element.contains(evt.target)) {
@@ -56,14 +62,14 @@ const showSuccess = (text) => {
     }
   });
 
-  successButton.addEventListener('click', () => {
+  successButtonElement.addEventListener('click', () => {
     removeAllert('.success');
   });
 
   document.addEventListener('keydown', onAlertEscKeydown);
 
   successFragment.appendChild(successElement);
-  main.appendChild(successFragment);
+  mainElement.appendChild(successFragment);
 };
 
 export { showError, showSuccess };

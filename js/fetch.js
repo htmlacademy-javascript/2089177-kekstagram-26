@@ -1,10 +1,13 @@
-const links = {
+const Links = {
   GET: 'https://26.javascript.pages.academy/kekstagram/data',
   POST: 'https://26.javascript.pages.academy/kekstagram/',
 };
-
+const Metods ={
+  GET:'GET',
+  POST:'POST',
+};
 const request = (onSuccess, onError, method, data) => {
-  fetch(links[method],
+  fetch(Links[method],
     {
       method: method,
       body: data,
@@ -19,4 +22,4 @@ const request = (onSuccess, onError, method, data) => {
     });
 };
 
-export { request };
+export { request,Metods };

@@ -40,7 +40,7 @@
   }
   // Removes duplicates from an array.
   function unique(array) {
-      return array.filter(function (a) {
+      return array.filterElement(function (a) {
           return !this[a] ? (this[a] = true) : false;
       }, {});
   }
@@ -555,7 +555,7 @@
       parsed.keyboardDefaultStep = entry;
   }
   function testRange(parsed, entry) {
-      // Filter incorrect input.
+      // filterElement incorrect input.
       if (typeof entry !== "object" || Array.isArray(entry)) {
           throw new Error("noUiSlider: 'range' is not an object.");
       }
@@ -1129,7 +1129,7 @@
           var ignoreFirst = false;
           var ignoreLast = false;
           var prevPct = 0;
-          // Create a copy of the group, sort it and filter away all duplicates.
+          // Create a copy of the group, sort it and filterElement away all duplicates.
           group = unique(group.slice().sort(function (a, b) {
               return a - b;
           }));
@@ -1212,7 +1212,7 @@
           });
           return indexes;
       }
-      function addMarking(spread, filterFunc, formatter) {
+      function addMarking(spread, filterElementFunc, formatter) {
           var _a, _b;
           var element = scope_Document.createElement("div");
           var valueSizeClasses = (_a = {},
@@ -1238,8 +1238,8 @@
               return source + " " + orientationClasses[options.ort] + " " + sizeClasses[type];
           }
           function addSpread(offset, value, type) {
-              // Apply the filter function, if it is set.
-              type = filterFunc ? filterFunc(value, type) : type;
+              // Apply the filterElement function, if it is set.
+              type = filterElementFunc ? filterElementFunc(value, type) : type;
               if (type === exports.PipsType.None) {
                   return;
               }
@@ -1272,13 +1272,13 @@
           // Fix #669
           removePips();
           var spread = generateSpread(pips);
-          var filter = pips.filter;
+          var filterElement = pips.filterElement;
           var format = pips.format || {
               to: function (value) {
                   return String(Math.round(value));
               },
           };
-          scope_Pips = scope_Target.appendChild(addMarking(spread, filter, format));
+          scope_Pips = scope_Target.appendChild(addMarking(spread, filterElement, format));
           return scope_Pips;
       }
       // Shorthand for base dimensions.
@@ -1289,7 +1289,7 @@
       }
       // Handler for attaching events trough a proxy.
       function attachEvent(events, element, callback, data) {
-          // This function can be used to 'filter' events to the slider.
+          // This function can be used to 'filterElement' events to the slider.
           // element is a node, not a nodeList
           var method = function (event) {
               var e = fixEvent(event, data.pageOffset, data.target || element);
@@ -1338,7 +1338,7 @@
       }
       // Provide a clean event with standardized offset values.
       function fixEvent(e, pageOffset, eventTarget) {
-          // Filter the event to register the type, which can be
+          // filterElement the event to register the type, which can be
           // touch, mouse or pointer. Offset changes need to be
           // made on an event specific basis.
           var touch = e.type.indexOf("touch") === 0;
@@ -1368,7 +1368,7 @@
               // In the case of touchstart events, we need to make sure there is still no more than one
               // touch on the target so we look amongst all touches.
               if (e.type === "touchstart") {
-                  var targetTouches = Array.prototype.filter.call(e.touches, isTouchOnTarget);
+                  var targetTouches = Array.prototype.filterElement.call(e.touches, isTouchOnTarget);
                   // Do not support more than one touch per handle.
                   if (targetTouches.length > 1) {
                       return false;
