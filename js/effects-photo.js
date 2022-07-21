@@ -6,60 +6,60 @@ const Slider = {
   STEP: 1,
 };
 
-const effectRadioGroupupElement = document.querySelector('.img-upload__effects');
-const effectLevelElement = document.querySelector('.img-upload__effect-level');
-const effectLevelSliderElement = document.querySelector('.effect-level__slider');
-const uploadPreviewImgElement = document.querySelector('.img-upload__preview > img');
-const effectLevelValueElement = document.querySelector('.effect-level__value');
+const effectRadioGroup = document.querySelector('.img-upload__effects');
+const effectLevel = document.querySelector('.img-upload__effect-level');
+const effectLevelSlider = document.querySelector('.effect-level__slider');
+const uploadPreviewImg = document.querySelector('.img-upload__preview > img');
+const effectLevelValue = document.querySelector('.effect-level__value');
 
-effectLevelElement.classList.add('visually-hidden');
+effectLevel.classList.add('visually-hidden');
 
 let lastClass = '';
 
 const effects = {
   none: () => {
-    effectLevelElement.classList.add('visually-hidden');
+    effectLevel.classList.add('visually-hidden');
     return 'none';
   },
   chrome: () => {
-    effectLevelElement.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(effectLevelValueElement.value, 10) * 0.01})`;
+    effectLevel.classList.remove('visually-hidden');
+    return `grayscale(${parseInt(effectLevelValue.value, 10) * 0.01})`;
   },
   sepia: () => {
-    effectLevelElement.classList.remove('visually-hidden');
-    return `sepia(${parseInt(effectLevelValueElement.value, 10) * 0.01})`;
+    effectLevel.classList.remove('visually-hidden');
+    return `sepia(${parseInt(effectLevelValue.value, 10) * 0.01})`;
   },
   marvin: () => {
-    effectLevelElement.classList.remove('visually-hidden');
-    return `invert(${Math.floor(effectLevelValueElement.value)}%)`;
+    effectLevel.classList.remove('visually-hidden');
+    return `invert(${Math.floor(effectLevelValue.value)}%)`;
   },
   phobos: () => {
-    effectLevelElement.classList.remove('visually-hidden');
-    return `blur(${(parseInt(effectLevelValueElement.value, 10) * 3) * 0.01}px)`;
+    effectLevel.classList.remove('visually-hidden');
+    return `blur(${(parseInt(effectLevelValue.value, 10) * 3) * 0.01}px)`;
   },
   heat: () => {
-    effectLevelElement.classList.remove('visually-hidden');
-    return `brightness(${(parseInt(effectLevelValueElement.value, 10) * 3) * 0.01})`;
+    effectLevel.classList.remove('visually-hidden');
+    return `brightness(${(parseInt(effectLevelValue.value, 10) * 3) * 0.01})`;
   },
 };
 
 const onEffectRadioGroupClick = (evt) => {
   if (evt.target.classList.contains('effects__preview')) {
     if (lastClass !== '') {
-      uploadPreviewImgElement.classList.remove(lastClass);
+      uploadPreviewImg.classList.remove(lastClass);
     }
-    effectLevelSliderElement.noUiSlider.set(DEFAULT_EFFECT_LEVEL);
+    effectLevelSlider.noUiSlider.set(DEFAULT_EFFECT_LEVEL);
     const currentClass = evt.target.classList[1];
     lastClass = currentClass;
 
-    uploadPreviewImgElement.classList.add(currentClass);
-    uploadPreviewImgElement.style.filterElement = effects[currentClass.replace('effects__preview--', '')]();
+    uploadPreviewImg.classList.add(currentClass);
+    uploadPreviewImg.style.filter = effects[currentClass.replace('effects__preview--', '')]();
   }
 };
 
-effectRadioGroupupElement.addEventListener('click', onEffectRadioGroupClick);
+effectRadioGroup.addEventListener('click', onEffectRadioGroupClick);
 
-noUiSlider.create(effectLevelSliderElement, {
+noUiSlider.create(effectLevelSlider, {
   range: {
     min: Slider.MIN,
     max: Slider.MAX,
@@ -69,19 +69,19 @@ noUiSlider.create(effectLevelSliderElement, {
   step:Slider.STEP,
 });
 
-effectLevelSliderElement.noUiSlider.on('slide', () => {
-  effectLevelValueElement.value = Math.round(effectLevelSliderElement.noUiSlider.get());
+effectLevelSlider.noUiSlider.on('slide', () => {
+  effectLevelValue.value = Math.round(effectLevelSlider.noUiSlider.get());
 
-  uploadPreviewImgElement.style.filterElement = effects[lastClass.replace('effects__preview--', '')]();
+  uploadPreviewImg.style.filter = effects[lastClass.replace('effects__preview--', '')]();
 });
 
 const setDefaultLevel = () => {
-  effectLevelSliderElement.noUiSlider.set(DEFAULT_EFFECT_LEVEL);
-  effectLevelValueElement.value = DEFAULT_EFFECT_LEVEL;
-  effectLevelElement.classList.add('visually-hidden');
-  uploadPreviewImgElement.style.filterElement = null;
+  effectLevelSlider.noUiSlider.set(DEFAULT_EFFECT_LEVEL);
+  effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
+  effectLevel.classList.add('visually-hidden');
+  uploadPreviewImg.style.filter = null;
   if (lastClass) {
-    uploadPreviewImgElement.classList.remove(lastClass);
+    uploadPreviewImg.classList.remove(lastClass);
   }
 };
 

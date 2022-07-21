@@ -120,7 +120,7 @@ main {
 /* Блок с фильтрами изображений других пользователей
    ========================================================================== */
 
-.img-filterElements {
+.img-filters {
   padding: 20px 0;
 
   display: -webkit-box;
@@ -132,11 +132,11 @@ main {
    justify-content: center;
 }
 
-.img-filterElements--inactive {
+.img-filters--inactive {
   opacity: 0;
 }
 
-.img-filterElements__button {
+.img-filters__button {
   padding: 5px 15px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -150,15 +150,15 @@ main {
   border: none;
 }
 
-.img-filterElements__button:active,
-.img-filterElements__button--active {
+.img-filters__button:active,
+.img-filters__button--active {
   color: #ff4e4e;
 
   background-color: #ffffff;
   border-radius: 2px;
 }
 
-.img-filterElements__label {
+.img-filters__label {
   padding: 5px 15px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -169,11 +169,11 @@ main {
   cursor: pointer;
 }
 
-.img-filterElements__radio:focus + .img-filterElements__label {
+.img-filters__radio:focus + .img-filters__label {
   outline: auto 5px highlight;
 }
 
-.img-filterElements__radio:checked + .img-filterElements__label {
+.img-filters__radio:checked + .img-filters__label {
   color: #ff4e4e;
   text-decoration: none;
 
@@ -348,14 +348,14 @@ main {
   background-repeat: no-repeat;
   background-position: center;
 
-  -webkit-filterElement: drop-shadow(0 0 10px #943106);
-          filterElement: drop-shadow(0 0 10px #943106);
+  -webkit-filter: drop-shadow(0 0 10px #943106);
+          filter: drop-shadow(0 0 10px #943106);
 }
 
 .img-upload__label:hover::after,
 .img-upload__label:active::after {
-  -webkit-filterElement: drop-shadow(0 0 10px #622104);
-          filterElement: drop-shadow(0 0 10px #622104);
+  -webkit-filter: drop-shadow(0 0 10px #622104);
+          filter: drop-shadow(0 0 10px #622104);
 
   -webkit-transform: scale(1.1);
       -ms-transform: scale(1.1);
@@ -644,28 +644,28 @@ main {
 }
 
 .effects__preview--chrome {
-  -webkit-filterElement: grayscale(1);
-          filterElement: grayscale(1);
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
 }
 
 .effects__preview--sepia {
-  -webkit-filterElement: sepia(1);
-          filterElement: sepia(1);
+  -webkit-filter: sepia(1);
+          filter: sepia(1);
 }
 
 .effects__preview--marvin {
-  -webkit-filterElement: invert(100%);
-          filterElement: invert(100%);
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
 }
 
 .effects__preview--phobos {
-  -webkit-filterElement: blur(3px);
-          filterElement: blur(3px);
+  -webkit-filter: blur(3px);
+          filter: blur(3px);
 }
 
 .effects__preview--heat {
-  -webkit-filterElement: brightness(3);
-          filterElement: brightness(3);
+  -webkit-filter: brightness(3);
+          filter: brightness(3);
 }
 
 

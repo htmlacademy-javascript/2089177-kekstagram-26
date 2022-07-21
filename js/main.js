@@ -11,40 +11,40 @@ const DEFAULT_PREVIEW_LOAD = 25;
 const RANDOM_PREVIEW_LOAD = 10;
 const DEBOUNCE_INTERVAL = 300;
 
-const filterElement = document.querySelector('.img-filterElements');
+const filter = document.querySelector('.img-filters');
 
 let photos = [];
 
 const  removeActiveClass = () => {
-  const activefilterElement = document.querySelector('.img-filterElements__button--active');
-  activefilterElement.classList.remove('img-filterElements__button--active');
+  const activeFilter = document.querySelector('.img-filters__button--active');
+  activeFilter.classList.remove('img-filters__button--active');
 };
 
 const removePhotos = () => {
-  const imagesElements = document.querySelectorAll('.picture');
-  if (imagesElements) {
-    imagesElements.forEach((element) => {
+  const images = document.querySelectorAll('.picture');
+  if (images) {
+    images.forEach((element) => {
       element.remove();
     });
   }
 };
 
-const filterElements = {
-  'filterElement-default': () => {
+const filters = {
+  'filter-default': () => {
     renderPhotos(photos.slice(0, DEFAULT_PREVIEW_LOAD));
   },
-  'filterElement-random': () => {
+  'filter-random': () => {
     renderPhotos(shuffleArray(photos.slice()).slice(0, RANDOM_PREVIEW_LOAD));
 
   },
-  'filterElement-discussed': () => {
+  'filter-discussed': () => {
     renderPhotos(photos.slice().sort((a, b) => b.comments.length - a.comments.length));
   },
 };
 
 
 const onSuccess = (data) => {
-  filterElement.classList.remove('img-filterElements--inactive');
+  filter.classList.remove('img-filters--inactive');
   photos = data.slice();
   renderPhotos(data.slice(0,DEFAULT_PREVIEW_LOAD));
 };
@@ -55,13 +55,13 @@ const onError = () => {
 
 request(onSuccess, onError,Metods.GET);
 
-const onfilterElementClick = debounce((evt) => {
-  if (evt.target.classList.contains('img-filterElements__button')) {
+const onFilterClick = debounce((evt) => {
+  if (evt.target.classList.contains('img-filters__button')) {
     removeActiveClass();
     removePhotos();
-    evt.target.classList.add('img-filterElements__button--active');
-    filterElements[evt.target.id]();
+    evt.target.classList.add('img-filters__button--active');
+    filters[evt.target.id]();
   }
 },DEBOUNCE_INTERVAL);
 
-filterElement.addEventListener('click', onfilterElementClick);
+filter.addEventListener('click', onFilterClick);
