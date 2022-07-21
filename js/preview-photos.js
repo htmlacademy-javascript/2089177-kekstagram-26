@@ -2,29 +2,30 @@
 import { showPicture } from './display-photo.js';
 
 const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
-const picturesListElements = document.querySelector('.pictures');
+const picturesListElement = document.querySelector('.pictures');
 
 const renderPhoto = (picture) => {
-  const photoPreview = pictureTemplateElement.cloneNode(true);
+  const photoPreviewElement = pictureTemplateElement.cloneNode(true);
 
-  photoPreview.querySelector('.picture__img').src = picture.url;
-  photoPreview.querySelector('.picture__likes').textContent = picture.likes;
-  photoPreview.querySelector('.picture__comments').textContent =picture.comments.length;
+  photoPreviewElement.querySelector('.picture__img').src = picture.url;
+  photoPreviewElement.querySelector('.picture__likes').textContent = picture.likes;
+  photoPreviewElement.querySelector('.picture__comments').textContent =picture.comments.length;
   // добавляем функцию отображения большой картинки
-  photoPreview.addEventListener('click', (evt) => {
+  photoPreviewElement.addEventListener('click', (evt) => {
     evt.preventDefault();
     showPicture(picture);
+
   });
 
-  return photoPreview;
+  return photoPreviewElement;
 };
 
 const renderPhotos = (photos) => {
-  const picturesListElementsFragment = document.createDocumentFragment();
+  const picturesListFragment = document.createDocumentFragment();
   photos.forEach((photo) => {
-    picturesListElementsFragment.appendChild(renderPhoto(photo));
+    picturesListFragment.appendChild(renderPhoto(photo));
   });
-  picturesListElements.appendChild(picturesListElementsFragment);
+  picturesListElement.appendChild(picturesListFragment);
 };
 
 export { renderPhotos };

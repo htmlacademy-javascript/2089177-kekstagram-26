@@ -6,7 +6,7 @@ const Slider = {
   STEP: 1,
 };
 
-const effectRadioGroupupElement = document.querySelector('.img-upload__effects');
+const effectRadioGroupElement = document.querySelector('.img-upload__effects');
 const effectLevelElement = document.querySelector('.img-upload__effect-level');
 const effectLevelSliderElement = document.querySelector('.effect-level__slider');
 const uploadPreviewImgElement = document.querySelector('.img-upload__preview > img');
@@ -53,11 +53,11 @@ const onEffectRadioGroupClick = (evt) => {
     lastClass = currentClass;
 
     uploadPreviewImgElement.classList.add(currentClass);
-    uploadPreviewImgElement.style.filterElement = effects[currentClass.replace('effects__preview--', '')]();
+    uploadPreviewImgElement.style.filter = effects[currentClass.replace('effects__preview--', '')]();
   }
 };
 
-effectRadioGroupupElement.addEventListener('click', onEffectRadioGroupClick);
+effectRadioGroupElement.addEventListener('click', onEffectRadioGroupClick);
 
 noUiSlider.create(effectLevelSliderElement, {
   range: {
@@ -72,14 +72,14 @@ noUiSlider.create(effectLevelSliderElement, {
 effectLevelSliderElement.noUiSlider.on('slide', () => {
   effectLevelValueElement.value = Math.round(effectLevelSliderElement.noUiSlider.get());
 
-  uploadPreviewImgElement.style.filterElement = effects[lastClass.replace('effects__preview--', '')]();
+  uploadPreviewImgElement.style.filter = effects[lastClass.replace('effects__preview--', '')]();
 });
 
 const setDefaultLevel = () => {
   effectLevelSliderElement.noUiSlider.set(DEFAULT_EFFECT_LEVEL);
   effectLevelValueElement.value = DEFAULT_EFFECT_LEVEL;
   effectLevelElement.classList.add('visually-hidden');
-  uploadPreviewImgElement.style.filterElement = null;
+  uploadPreviewImgElement.style.filter = null;
   if (lastClass) {
     uploadPreviewImgElement.classList.remove(lastClass);
   }
