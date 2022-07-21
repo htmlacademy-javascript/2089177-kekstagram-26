@@ -5,13 +5,13 @@ const Photo = {
   HEIGHT: 600,
 };
 
-const uploadFile = document.querySelector('#upload-file');
-const uploadPreviewContainer = document.querySelector('.img-upload__preview');
-const uploadPreviewImg = uploadPreviewContainer.querySelector('img');
-const previews = document.querySelectorAll('.effects__preview');
+const uploadFileElement = document.querySelector('#upload-file');
+const uploadPreviewContainerElement = document.querySelector('.img-upload__preview');
+const uploadPreviewImgElement = uploadPreviewContainerElement.querySelector('img');
+const previewsElements = document.querySelectorAll('.effects__preview');
 
-uploadFile.addEventListener('change', () => {
-  const file = uploadFile.files[0];
+uploadFileElement.addEventListener('change', () => {
+  const file = uploadFileElement.files[0];
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
@@ -20,12 +20,12 @@ uploadFile.addEventListener('change', () => {
     const reader = new FileReader();
 
     reader.addEventListener('load', () => {
-      uploadPreviewImg.src = reader.result;
-      uploadPreviewImg.width = Photo.WIDTH;
-      uploadPreviewImg.height = Photo.HEIGHT;
+      uploadPreviewImgElement.src = reader.result;
+      uploadPreviewImgElement.width = Photo.WIDTH;
+      uploadPreviewImgElement.height = Photo.HEIGHT;
 
-      previews.forEach((filter) => {
-        filter.style.backgroundImage = `url(${reader.result})`;
+      previewsElements.forEach((filterElement) => {
+        filterElement.style.backgroundImage = `url(${reader.result})`;
       });
     });
 

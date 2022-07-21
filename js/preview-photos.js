@@ -1,11 +1,11 @@
 
 import { showPicture } from './display-photo.js';
 
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const picturesList = document.querySelector('.pictures');
+const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
+const picturesListElements = document.querySelector('.pictures');
 
 const renderPhoto = (picture) => {
-  const photoPreview = pictureTemplate.cloneNode(true);
+  const photoPreview = pictureTemplateElement.cloneNode(true);
 
   photoPreview.querySelector('.picture__img').src = picture.url;
   photoPreview.querySelector('.picture__likes').textContent = picture.likes;
@@ -14,18 +14,17 @@ const renderPhoto = (picture) => {
   photoPreview.addEventListener('click', (evt) => {
     evt.preventDefault();
     showPicture(picture);
-
   });
 
   return photoPreview;
 };
 
 const renderPhotos = (photos) => {
-  const picturesListFragment = document.createDocumentFragment();
+  const picturesListElementsFragment = document.createDocumentFragment();
   photos.forEach((photo) => {
-    picturesListFragment.appendChild(renderPhoto(photo));
+    picturesListElementsFragment.appendChild(renderPhoto(photo));
   });
-  picturesList.appendChild(picturesListFragment);
+  picturesListElements.appendChild(picturesListElementsFragment);
 };
 
 export { renderPhotos };
