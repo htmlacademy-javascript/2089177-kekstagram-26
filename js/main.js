@@ -11,7 +11,7 @@ const DEFAULT_PREVIEW_LOAD = 25;
 const RANDOM_PREVIEW_LOAD = 10;
 const DEBOUNCE_INTERVAL = 300;
 
-const filter = document.querySelector('.img-filters');
+const filterElement = document.querySelector('.img-filters');
 
 let photos = [];
 
@@ -44,7 +44,7 @@ const filters = {
 
 
 const onSuccess = (data) => {
-  filter.classList.remove('img-filters--inactive');
+  filterElement.classList.remove('img-filters--inactive');
   photos = data.slice();
   renderPhotos(data.slice(0,DEFAULT_PREVIEW_LOAD));
 };
@@ -64,4 +64,4 @@ const onFilterClick = debounce((evt) => {
   }
 },DEBOUNCE_INTERVAL);
 
-filter.addEventListener('click', onFilterClick);
+filterElement.addEventListener('click', onFilterClick);

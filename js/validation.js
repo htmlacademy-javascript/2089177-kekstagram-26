@@ -1,7 +1,4 @@
 import { isEscapeKey,getMaxStringLength,isArrayUnique } from './util.js';
-import { showError, showSuccess } from './alerts.js';
-import { request,Metods } from './fetch.js';
-import { onPhotoEditorClose } from './editor-photo.js';
 
 
 const RE = /^#[a-zA-Zа-яА-ЯёЁ0-9]{0,}$/;
@@ -10,11 +7,11 @@ const HASHTAGS_LENGTH =19;
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAGS = 5;
 
-const uploadForm = document.querySelector('.img-upload__form');
-const textDescription = document.querySelector('.text__description');
-const textHashtags = document.querySelector('.text__hashtags');
+const uploadFormElement = document.querySelector('.img-upload__form');
+const textDescriptionElement = document.querySelector('.text__description');
+const textHashtagsElement = document.querySelector('.text__hashtags');
 
-const pristine = new Pristine(uploadForm, {
+const pristine = new Pristine(uploadFormElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
@@ -34,48 +31,28 @@ const errorMessage = {
 const preparedHashtags = (value) => value.trim().toLowerCase().split(' ');
 
 const isSplitSpaceHashtag = (hashtags) => preparedHashtags(hashtags).some((value) => value.indexOf('#', 1) <= 1);
-pristine.addValidator(textHashtags,isSplitSpaceHashtag,errorMessage.SEPARATION_HASHTAG);
+pristine.addValidator(textHashtagsElement,isSplitSpaceHashtag,errorMessage.SEPARATION_HASHTAG);
 
 const isMaxHashtagsLength = (hashtags) => preparedHashtags(hashtags).length <= MAX_HASHTAGS;
-pristine.addValidator(textHashtags,isMaxHashtagsLength,errorMessage.MAX_HASHTAGS_LENGTH);
+pristine.addValidator(textHashtagsElement,isMaxHashtagsLength,errorMessage.MAX_HASHTAGS_LENGTH);
 
 const isSeparationHashtags = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => RE_SYMBOL.test(value));
-pristine.addValidator(textHashtags,isSeparationHashtags,errorMessage.SEPARATION_HASHTAGS);
+pristine.addValidator(textHashtagsElement,isSeparationHashtags,errorMessage.SEPARATION_HASHTAGS);
 
 const isRepeatHashtags = (hashtags) => isArrayUnique(preparedHashtags(hashtags));
-pristine.addValidator(textHashtags,isRepeatHashtags,errorMessage.REPEAT_HASHTAGS);
+pristine.addValidator(textHashtagsElement,isRepeatHashtags,errorMessage.REPEAT_HASHTAGS);
 
 const isFirstSignTypeHashtag = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => RE.test(value));
-pristine.addValidator(textHashtags, isFirstSignTypeHashtag,errorMessage.FIRST_SIGN_TYPE);
+pristine.addValidator(textHashtagsElement, isFirstSignTypeHashtag,errorMessage.FIRST_SIGN_TYPE);
 
 const isHashtagLength = (hashtags) => hashtags === '' || preparedHashtags(hashtags).every((value) => getMaxStringLength(value,HASHTAGS_LENGTH));
-pristine.addValidator(textHashtags, isHashtagLength,errorMessage.HASHTAG_LENGTH);
+pristine.addValidator(textHashtagsElement, isHashtagLength,errorMessage.HASHTAG_LENGTH);
 
 const isValidateComment = (value) => getMaxStringLength(value, MAX_COMMENT_LENGTH);
-pristine.addValidator(textDescription, isValidateComment,errorMessage.COMMENT_LENGTH);
+pristine.addValidator(textDescriptionElement, isValidateComment,errorMessage.COMMENT_LENGTH);
 
 // Отправка загруженного фото
 
-const onSuccess = () => {
-  showSuccess('Изображение успешно загружено');
-  onPhotoEditorClose();
-  uploadForm.reset();
-};
-
-const onError = () => {
-  showError('Что-то пошло не так', 'Загрузить другой файл');
-  onPhotoEditorClose();
-};
-
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (!pristine.validate()) {
-    textHashtags.style.border = '2px solid red';
-  }else{
-    textHashtags.style.border = 'none';
-    request(onSuccess, onError, Metods.POST, new FormData(evt.target));
-  }
-});
 
 const onEscapeDown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -84,5 +61,7 @@ const onEscapeDown = (evt) => {
   }
 };
 
-textDescription.addEventListener('keydown', onEscapeDown);
-textHashtags.addEventListener('keydown', onEscapeDown);
+textDescriptionElement.addEventListener('keydown', onEscapeDown);
+textHashtagsElement.addEventListener('keydown', onEscapeDown);
+
+export {uploadFormElement,pristine,textHashtagsElement};
