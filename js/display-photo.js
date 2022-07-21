@@ -15,13 +15,12 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 
 let commentsCount = COMMENTS_LOAD_STEP;
 
-
 // рендерю комент
 const renderComment = (comment) => {
   const commentSimilar = commentTemplate.cloneNode(true);
-
-  commentSimilar.querySelector('.social__picture').src = comment.avatar;
-  commentSimilar.querySelector('.social__picture').alt = comment.name;
+  const socialPicture = commentSimilar.querySelector('.social__picture');
+  socialPicture.src = comment.avatar;
+  socialPicture.alt = comment.name;
   commentSimilar.querySelector('.social__text').textContent = comment.message;
 
   return commentSimilar;

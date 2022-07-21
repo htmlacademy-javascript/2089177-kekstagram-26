@@ -1,6 +1,6 @@
 
 import { renderPhotos } from './preview-photos.js';
-import { request } from './fetch.js';
+import { request,Metods } from './fetch.js';
 import { showError } from './alerts.js';
 import { debounce,shuffleArray } from './util.js';
 import './editor-photo.js';
@@ -53,7 +53,7 @@ const onError = () => {
   showError('Ошибка загрузки!', 'Закрыть');
 };
 
-request(onSuccess, onError, 'GET');
+request(onSuccess, onError,Metods.GET);
 
 const onFilterClick = debounce((evt) => {
   if (evt.target.classList.contains('img-filters__button')) {

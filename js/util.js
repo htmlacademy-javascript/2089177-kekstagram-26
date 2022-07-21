@@ -15,13 +15,13 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 
 
 const isArrayUnique = (elements) => {
-  const result = [];
+  const results = [];
   elements.forEach((element) => {
-    if (!result.includes(element)) {
-      result.push(element);
+    if (!results.includes(element)) {
+      results.push(element);
     }
   });
-  return result.length === elements.length;
+  return results.length === elements.length;
 };
 
 const debounce = (callback, timeoutDelay) =>{

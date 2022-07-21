@@ -1,6 +1,6 @@
 import { isEscapeKey,getMaxStringLength,isArrayUnique } from './util.js';
 import { showError, showSuccess } from './alerts.js';
-import { request } from './fetch.js';
+import { request,Metods } from './fetch.js';
 import { onPhotoEditorClose } from './editor-photo.js';
 
 
@@ -63,7 +63,8 @@ const onSuccess = () => {
 };
 
 const onError = () => {
-  showError('Чnо-то пошло не так', 'Загрузить другой файл');
+  showError('Что-то пошло не так', 'Загрузить другой файл');
+  onPhotoEditorClose();
 };
 
 uploadForm.addEventListener('submit', (evt) => {
@@ -72,7 +73,7 @@ uploadForm.addEventListener('submit', (evt) => {
     textHashtags.style.border = '2px solid red';
   }else{
     textHashtags.style.border = 'none';
-    request(onSuccess, onError, 'POST', new FormData(evt.target));
+    request(onSuccess, onError, Metods.POST, new FormData(evt.target));
   }
 });
 
