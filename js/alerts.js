@@ -11,14 +11,16 @@ const removeAllert = (type) => {
   // eslint-disable-next-line no-use-before-define
   document.removeEventListener('keydown', onAlertEscKeydown);
 };
-const onAlertEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    removeAllert('.error');
-  }
-};
+
 const onSuccessEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     removeAllert('.success');
+  }
+};
+
+const onAlertEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    removeAllert('.error');
   }
 };
 
@@ -39,7 +41,7 @@ const showError = (text, button) => {
     removeAllert('.error');
   });
 
-
+  document.addEventListener('keydown', onSuccessEscKeydown);
   document.addEventListener('keydown', onAlertEscKeydown);
   errorFragmentElement.appendChild(errorElement);
   mainElement.appendChild(errorFragmentElement);
@@ -54,7 +56,7 @@ const showSuccess = (text) => {
   successElement.querySelector('.success__title').textContent = text;
 
   const successButtonElement = successElement.querySelector('.success__button');
-  document.addEventListener('keydown', onSuccessEscKeydown);
+
   document.addEventListener('click', (evt) => {
     const element = document.querySelector('.success__inner');
     if (!element.contains(evt.target)) {
